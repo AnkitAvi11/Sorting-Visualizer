@@ -4,6 +4,6 @@ Thanks to Clement who inspired me to do this sorting visualizer using React. I n
 ### Coming to application
 This application has the following sorting algorithms implemented  
 -   Bubble Sort
-
+-   Selection Sort added
 
 More to come soon
