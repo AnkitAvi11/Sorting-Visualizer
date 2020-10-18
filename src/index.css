@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bar-container {
+  position: absolute;
+  left: 100px;
+  /* top: 100px; */
+}
+
+.bar-container::after{
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.bar {
+  width: 2px;
+  display: inline-block;
+  margin: 0 1px;
+  background: dodgerblue;
+}
