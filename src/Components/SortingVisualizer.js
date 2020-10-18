@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getSortAnimations} from "./SortingAlgorithm";
+import {getSortAnimations, selectionSort} from "./SortingAlgorithm";
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 1;
@@ -37,7 +37,7 @@ class SortingVisualizer extends Component{
 
     bubbleSort = async () => {
         const arr = [...this.state.array]
-        const animations = getSortAnimations(arr)
+        const animations = getSortAnimations(this.state.array)
         const arrayBars = document.getElementsByClassName('bar');
         for (let i = 0; i < animations.length; i++) {
             const isColorChange = i%3 !== 2;
@@ -66,6 +66,35 @@ class SortingVisualizer extends Component{
         
     }
 
+    selectionSortAction = () => {
+        let animations = selectionSort(this.state.array)
+        const arrayBars = document.getElementsByClassName('bar');
+
+        for (let i = 0; i < animations.length; i++) {
+            const isColorChange = i%3 !== 2;
+
+            if(isColorChange){
+                const [bar1,bar2] = animations[i];
+                const sty1 = arrayBars[bar1].style;
+                const sty2 = arrayBars[bar2].style;
+
+                const color = i%3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+
+                setTimeout(() => {
+                    sty1.backgroundColor = color;
+                    sty2.backgroundColor = color;
+                },i* ANIMATION_SPEED_MS);
+            }
+            else{
+                setTimeout(() => {
+                    arrayBars[animations[i][0][0]].style.height = `${animations[i][0][1]}px`;
+                    arrayBars[animations[i][1][0]].style.height = `${animations[i][1][1]}px`;
+                }, i*ANIMATION_SPEED_MS);
+            }
+        }
+        
+    }
+
     render() {
 
         let bars = this.state.array.map((bar, index) => {
@@ -86,6 +115,7 @@ class SortingVisualizer extends Component{
                 <div className="buttons" style={{textAlign:"center"}}>
                     <button onClick={this.resetArray}>Randomize Array</button>
                     <button onClick={this.bubbleSort}>Bubble Sort</button>
+                    <button onClick={this.selectionSortAction}>Selection Sort</button>
                 </div>
             </div>
         )
